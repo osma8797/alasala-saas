@@ -10,7 +10,7 @@ revenue and tenants.
 
 ### 🍽️ Public Menu (Customer View)
 
-- **Menu**: https://alasala-saas.vercel.app/alasala/menu
+- **Menu**: https://alasala-saas.vercel.app/alasala/menu?success=true
 
 > Place a test order using **Stripe Test Card** (`4242 4242 4242 4242`) to see the real-time update in the Dashboard.
 
