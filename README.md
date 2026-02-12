@@ -1,145 +1,124 @@
-# Al Asala SaaS - Restaurant Management Platform
+# Al-Asala: Full-Stack Multi-Tenant SaaS Platform
 
-A multi-tenant, enterprise-grade Restaurant Management System built with Next.js, Supabase, and Stripe. Designed for restaurant chains that need centralized order management, payment processing, and role-based access control.
+Al-Asala is a modern **multi-tenant restaurant SaaS** built with a full‑stack Next.js architecture.  
+It provides a beautiful public menu experience, plus an internal admin dashboard for managing orders,
+revenue and tenants.
 
-## Features
+---
 
-- **Multi-Tenant Architecture** - Each restaurant operates under its own slug (`/alasala/menu`, `/restaurant-b/menu`)
-- **Stripe Payments** - Full checkout flow with webhook handling, idempotency, and payment lifecycle tracking
-- **RBAC (Role-Based Access Control)** - Three roles (Owner, Admin, Staff) with middleware-enforced route protection
-- **Admin Dashboard** - Real-time order tracking with revenue charts, status breakdowns, and popular item analytics
-- **Audit Logs** - Immutable trail of all critical actions with automatic triggers for status changes
-- **Server-Side Price Validation** - Prices are validated against the server catalog; client-sent prices are ignored
+## 👤 Demo Access (for Recruiters)
 
-## Tech Stack
+### 🍽️ Public Menu (Customer View)
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript (Strict Mode) |
-| Styling | Tailwind CSS v4 |
-| Database | Supabase (PostgreSQL + RLS) |
-| Auth | Supabase Auth |
-| Payments | Stripe (Checkout + Webhooks) |
-| Charts | Recharts |
-| Testing | Vitest + Testing Library |
-| Linting | ESLint + Prettier |
+- **Menu**: https://alasala-saas.vercel.app/alasala/menu
 
-## Database Schema
+> Place a test order using **Stripe Test Card** (`4242 4242 4242 4242`) to see the real-time update in the Dashboard.
 
-7 tables with Row-Level Security (RLS) enabled:
+### 🔐 Admin Dashboard
 
-```
-tenants          - Restaurant/business entities
-users            - Extended profiles linked to Supabase Auth (OWNER/ADMIN/STAFF roles)
-orders           - Customer orders with tenant association
-order_items      - Individual items per order
-payments         - Transactional payment records (source of truth)
-payment_logs     - Append-only observability log for debugging
-audit_logs       - Immutable audit trail for compliance
-```
+- **Login**: https://alasala-saas.vercel.app/login  
+  - **Email**: `admin@demo.com`  
+  - **Password**: `123456`
 
-## Project Structure
+> This demo account is read-only for evaluation purposes.
 
-```
-app/
-  [slug]/              Multi-tenant public pages (menu, cart, checkout)
-  admin/dashboard/     Protected admin dashboard with charts
-  api/checkout/        Stripe checkout session creation
-  api/webhook/stripe/  Stripe webhook handler
-components/
-  ui/                  Reusable UI components (Button, Card, Input, Modal, Badge)
-  layout/              Layout components (Navbar, Footer)
-lib/
-  rbac.ts              Role-based access control utilities
-  stripe.ts            Stripe client singleton
-  payment-logger.ts    Payment event logging
-  supabase-admin.ts    Service-role Supabase client
-  supabase-server.ts   Server-side Supabase client
-  supabase-browser.ts  Client-side Supabase client
-  utils.ts             Formatting and helper functions
-hooks/                 Custom React hooks (useCart, useCheckout)
-types/                 Centralized TypeScript type definitions
-constants/             Menu catalog (server-side price source of truth)
-supabase/migrations/   5 SQL migration files
-__tests__/             53 unit tests (auth, payments, utilities)
-middleware.ts          Auth + RBAC enforcement (3-layer protection)
-```
+---
 
-## Getting Started
+## 🧰 Tech Stack
 
-### Prerequisites
+| Layer      | Technology                                              |
+|-----------|----------------------------------------------------------|
+| Framework | **Next.js 14/15** (App Router, React Server Components) |
+| Language  | **TypeScript**                                          |
+| Styling   | **Tailwind CSS**                                        |
+| Backend   | **Supabase** (PostgreSQL + RLS + Auth)                  |
+| Payments  | **Stripe** (Checkout Sessions + Webhooks)               |
+| Charts    | **Recharts**                                            |
 
-- Node.js 18+
-- A [Supabase](https://supabase.com) project
-- A [Stripe](https://stripe.com) account (test mode)
+---
 
-### Setup
+## ✨ Key Features
+
+- **Multi-Tenant Architecture** – Each restaurant lives under its own slug  
+  (for example: `/alasala/menu`).
+- **Secure Payments** – Stripe Checkout with webhook handling and idempotency.
+- **Role-Based Access Control (RBAC)** – OWNER / ADMIN / STAFF with middleware-enforced protection.
+- **Admin Dashboard** – KPIs, revenue charts, order status breakdown, and recent orders table.
+- **Server-Side Pricing** – Menu prices are always validated on the server; client values are ignored.
+
+---
+
+## 🧱 High-Level Structure
 
 ```bash
-# 1. Clone the repository
+app/
+  [slug]/              # Public restaurant pages (home, menu, cart, checkout)
+  admin/dashboard/     # Protected admin dashboard
+  api/checkout/        # Stripe checkout session creation
+  api/webhook/stripe/  # Stripe webhook handler
+
+components/
+  ui/                  # Reusable UI components (Button, Card, Input, Modal, Badge)
+  layout/              # Layout components (Navbar, Footer)
+
+lib/
+  rbac.ts              # Role-based access utilities
+  stripe.ts            # Stripe client singleton
+  payment-logger.ts    # Payment event logging
+  supabase-*.ts        # Supabase clients (admin/server/browser)
+
+supabase/
+  migrations/          # SQL migrations for tenants, orders, payments, etc.
+```
+
+---
+
+## 🚀 Roadmap
+
+- Migrating manual menu configuration to **Supabase Database** for dynamic management.
+
+---
+
+## 🛠 Getting Started (Local)
+
+```bash
+# 1. Clone
 git clone https://github.com/osma8797/alasala-saas.git
 cd alasala-saas
 
 # 2. Install dependencies
 npm install
 
-# 3. Configure environment variables
+# 3. Environment variables
 cp .env.example .env.local
-# Edit .env.local with your Supabase and Stripe keys
+# Fill in Supabase + Stripe keys
 
-# 4. Run database migrations
-# Option A: Supabase CLI
-supabase link --project-ref <your-ref>
-supabase db push
-
-# Option B: Copy SQL from supabase/migrations/ into Supabase SQL Editor
-
-# 5. Start development server
+# 4. Run dev server
 npm run dev
 ```
 
-### Testing Payments Locally
+---
 
-Stripe webhooks require a public URL. For local development:
+## 📜 Useful Scripts
 
-```bash
-# Install Stripe CLI
-brew install stripe/stripe-cli/stripe
+| Command                  | Description                 |
+|--------------------------|-----------------------------|
+| `npm run dev`            | Start development server    |
+| `npm run build`          | Build for production        |
+| `npm run start`          | Run production build        |
+| `npm run lint`           | Run ESLint                  |
+| `npm run test`           | Run tests with Vitest       |
 
-# Forward webhooks to your local server
-stripe listen --forward-to localhost:3000/api/webhook/stripe
-```
+---
 
-## Available Scripts
+## 🔐 Notes on Security
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check formatting |
-| `npm run test` | Run tests in watch mode |
-| `npm run test:run` | Run tests once |
-| `npm run test:coverage` | Run tests with coverage report |
+- Middleware-based **RBAC** on `/admin` routes.
+- Supabase **Row-Level Security (RLS)** on core tables.
+- Stripe webhooks verified with a signing secret, with idempotent order creation.
 
-## Security
+---
 
-- **Middleware RBAC** - Auth check -> Profile fetch -> Active check -> Role hierarchy check
-- **Row-Level Security** - All tables have RLS policies; service role used only for webhooks
-- **Server-Side Pricing** - Checkout API validates items against server catalog
-- **Webhook Idempotency** - Duplicate Stripe events are detected and skipped
-- **Audit Trail** - All payment and order status changes are automatically logged
+## 📄 License
 
-## Architecture Decisions
-
-1. **Multi-tenant via slug routing** - Allows adding new restaurants without code changes
-2. **Payments vs Payment Logs** - Separate transactional table (payments) from observability log (payment_logs)
-3. **Edge-compatible middleware** - RBAC logic inlined in middleware to avoid Node.js API dependencies
-4. **Singleton Stripe client** - Single instance reused across API routes to avoid connection overhead
-
-## License
-
-Private - All rights reserved.
+This repository is currently **private** and intended for portfolio and evaluation purposes only.
