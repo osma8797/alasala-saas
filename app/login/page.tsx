@@ -226,6 +226,20 @@ export default function LoginPage() {
               {mode === 'login' ? 'Sign In' : 'Create Account'}
             </Button>
 
+            {/* Demo credentials for recruiters (login mode only) */}
+            {mode === 'login' && (
+              <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3 text-center">
+                <p className="text-xs font-medium uppercase tracking-wider text-slate-500 mb-2">
+                  Demo credentials (recruiters)
+                </p>
+                <p className="text-sm text-slate-700 font-mono">
+                  <span className="text-slate-500">Email:</span> admin@demo.com
+                  <span className="mx-2 text-slate-300">·</span>
+                  <span className="text-slate-500">Password:</span> 123456
+                </p>
+              </div>
+            )}
+
             {/* Divider */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
