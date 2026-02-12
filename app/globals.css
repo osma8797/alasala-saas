@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* Corporate Trust Color Palette for European SaaS */
+:root {
+  /* Primary Colors */
+  --primary: #0066FF;           /* Sapphire Blue - main buttons/actions */
+  --primary-hover: #0052CC;     /* Darker blue for hover states */
+  --primary-light: #E6F0FF;     /* Light blue for backgrounds */
+  
+  /* Secondary Colors */
+  --secondary: #64748B;         /* Slate Gray - subtitles and icons */
+  --secondary-light: #94A3B8;   /* Lighter slate for muted text */
+  
+  /* Background Colors */
+  --background: #F8FAFC;        /* Cool Gray - page backgrounds */
+  --background-card: #FFFFFF;   /* Pure White - cards */
+  --background-elevated: #FFFFFF;
+  
+  /* Text Colors */
+  --text-primary: #1E293B;      /* Charcoal - headings */
+  --text-secondary: #475569;    /* Dark gray - body text */
+  --text-muted: #64748B;        /* Muted text */
+  
+  /* Border & Divider */
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+  
+  /* Status Colors */
+  --success: #10B981;
+  --success-light: #D1FAE5;
+  --warning: #F59E0B;
+  --warning-light: #FEF3C7;
+  --error: #EF4444;
+  --error-light: #FEE2E2;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Radius */
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  /* Font */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility Classes for the new palette */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.bg-page {
+  background-color: var(--background);
+}
+
+.bg-card {
+  background-color: var(--background-card);
+}
+
+/* Button Base Styles */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--background);
+  border-color: var(--secondary);
+}
+
+/* Card Styles */
+.card {
+  background: var(--background-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-elevated {
+  background: var(--background-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
